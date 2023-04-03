@@ -11,7 +11,7 @@ namespace test1
     class stockdata
     {
         public string symbol { get; set; }
-        public decimal price { get; set; }
+        public dynamic price { get; set; }
 
         public stockdata(string symbol)
         {
@@ -27,15 +27,11 @@ namespace test1
             using (WebClient client = new WebClient())
             {
                 dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                try
+
+                foreach(KeyValuePair<string, dynamic> kvp in json_data)
                 {
-                    MessageBox.Show(json_data.price);
+                    MessageBox.Show((kvp.Value).toString());
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-                
             }
         }
     }
