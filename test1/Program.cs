@@ -1,14 +1,14 @@
 namespace test1
 {
-    internal static class Program
+    static class Program
     {
         static void Main()
         {
-            string windowTitle = "title";
-            string labelName = "label";
+            string symbol = "IBM";
+            stockdata stock = new stockdata("IBM");
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new window(windowTitle, labelName));
+            Application.Run(new window(stock));
         }
     }
 }

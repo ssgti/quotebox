@@ -2,13 +2,13 @@
 {
     class window : Form
     {
-        string windowTitle;
-        string labelName;
+        string ticker;
+        string price;
 
-        public window(string windowTitle, string labelName)
+        public window(stockdata stock)
         {
-            this.windowTitle = windowTitle;
-            this.labelName = labelName;
+            this.ticker = stock.symbol;
+            this.price = stock.price;
             InitializeComponent();
         }
 
@@ -17,7 +17,7 @@
         private void InitializeComponent()
         {
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = windowTitle;
+            this.Text = ticker;
 
             this.SuspendLayout();
 
@@ -25,11 +25,11 @@
 
             this.label1 = new System.Windows.Forms.Label();
             this.label1.Location = new System.Drawing.Point(10, 10);
-            this.label1.Name = "test";
+            this.label1.Name = "price";
             this.label1.AutoSize = true;
             this.label1.Size = new System.Drawing.Size(40, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = labelName;
+            this.label1.Text = price;
 
             Controls.Add(label1);
 
