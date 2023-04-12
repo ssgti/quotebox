@@ -4,7 +4,7 @@ namespace test1
     {
         static void Main()
         {
-            string symbol = "F";
+            string symbol = "INVP.L";
             stockdata stock = new stockdata(symbol);
 
             ApplicationConfiguration.Initialize();

@@ -35,6 +35,12 @@ namespace test1
                                        
                     string p = jsonElement.GetProperty("05. price").ToString();
                     this.price = double.Parse(p);
+
+                    /// add:
+                    /// -high
+                    /// -low
+                    /// -open
+                    /// -prev close
                 }
             }
         }

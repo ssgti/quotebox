@@ -29,7 +29,7 @@
             this.label1.AutoSize = true;
             this.label1.Size = new System.Drawing.Size(40, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = price;
+            this.label1.Text = "price: " + price;
 
             Controls.Add(label1);
 
