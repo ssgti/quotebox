@@ -7,8 +7,8 @@
 
         public window(stockdata stock)
         {
-            this.ticker = stock.symbol;
-            this.price = stock.price;
+            this.ticker = stock.symbol.ToString();
+            this.price = stock.price.ToString();
             InitializeComponent();
         }
 
@@ -16,7 +16,7 @@
 
         private void InitializeComponent()
         {
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(400, 200);
             this.Text = ticker;
 
             this.SuspendLayout();

@@ -4,8 +4,8 @@ namespace test1
     {
         static void Main()
         {
-            string symbol = "IBM";
-            stockdata stock = new stockdata("IBM");
+            string symbol = "F";
+            stockdata stock = new stockdata(symbol);
 
             ApplicationConfiguration.Initialize();
             Application.Run(new window(stock));

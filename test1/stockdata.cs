@@ -11,7 +11,7 @@ namespace test1
     class stockdata
     {
         public string symbol { get; set; }
-        public dynamic price { get; set; }
+        public double price { get; set; }
 
         public stockdata(string symbol)
         {
@@ -30,7 +30,11 @@ namespace test1
 
                 foreach(KeyValuePair<string, dynamic> kvp in json_data)
                 {
-                    MessageBox.Show((kvp.Value).toString());
+                    using JsonDocument doc = JsonDocument.Parse(kvp.Value.ToString());
+                    JsonElement jsonElement = doc.RootElement;
+                                       
+                    string p = jsonElement.GetProperty("05. price").ToString();
+                    this.price = double.Parse(p);
                 }
             }
         }
