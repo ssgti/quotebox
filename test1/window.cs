@@ -32,7 +32,7 @@
         private void InitializeComponent()
         {
             this.ClientSize = new System.Drawing.Size(400, 200);
-            this.Text = ticker;
+            this.Text = ticker + " - previous day trading stats";
 
             this.SuspendLayout();
 
@@ -73,7 +73,7 @@
             this.priceLbl.AutoSize = true;
             this.priceLbl.Size = new System.Drawing.Size(40, 20);
             this.priceLbl.TabIndex = 0;
-            this.priceLbl.Text = "current price: " + price;
+            this.priceLbl.Text = "price: " + price;
             Controls.Add(priceLbl);
 
             pcloseLbl = new Label();
@@ -83,7 +83,7 @@
             this.pcloseLbl.AutoSize = true;
             this.pcloseLbl.Size = new System.Drawing.Size(40, 20);
             this.pcloseLbl.TabIndex = 0;
-            this.pcloseLbl.Text = "previous close: " + pclose;
+            this.pcloseLbl.Text = "close: " + pclose;
             Controls.Add(pcloseLbl);
 
             changepLbl = new Label();
