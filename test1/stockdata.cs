@@ -16,7 +16,7 @@ namespace test1
         public double low { get; set; }
         public double price { get; set; }
         public double pclose { get; set; }
-        public double changep { get; set; }
+        public string changep { get; set; }
 
         public stockdata(string symbol)
         {
@@ -53,8 +53,8 @@ namespace test1
                     string c = jsonElement.GetProperty("08. previous close").ToString();
                     this.pclose = double.Parse(c);
 
-                    string ch = jsonElement.GetProperty("05. price").ToString();
-                    this.changep = double.Parse(ch);
+                    string ch = jsonElement.GetProperty("10. change percent").ToString();
+                    this.changep = ch;
                 }
             }
         }
