@@ -11,7 +11,12 @@ namespace test1
     class stockdata
     {
         public string symbol { get; set; }
+        public double open { get; set; }
+        public double high { get; set; }
+        public double low { get; set; }
         public double price { get; set; }
+        public double pclose { get; set; }
+        public double changep { get; set; }
 
         public stockdata(string symbol)
         {
@@ -32,15 +37,24 @@ namespace test1
                 {
                     using JsonDocument doc = JsonDocument.Parse(kvp.Value.ToString());
                     JsonElement jsonElement = doc.RootElement;
-                                       
+
+                    string o = jsonElement.GetProperty("02. open").ToString();
+                    this.open = double.Parse(o);
+
+                    string h = jsonElement.GetProperty("03. high").ToString();
+                    this.high = double.Parse(h);
+
+                    string l = jsonElement.GetProperty("04. low").ToString();
+                    this.low = double.Parse(l);
+
                     string p = jsonElement.GetProperty("05. price").ToString();
                     this.price = double.Parse(p);
 
-                    /// add:
-                    /// -high
-                    /// -low
-                    /// -open
-                    /// -prev close
+                    string c = jsonElement.GetProperty("08. previous close").ToString();
+                    this.pclose = double.Parse(c);
+
+                    string ch = jsonElement.GetProperty("05. price").ToString();
+                    this.changep = double.Parse(ch);
                 }
             }
         }
