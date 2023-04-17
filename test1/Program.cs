@@ -5,10 +5,16 @@ namespace test1
         static void Main()
         {
             string symbol = "INVP.L";
-            stockdata stock = new stockdata(symbol);
+            dailyQuote stock = new dailyQuote(symbol);
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new window(stock));
+            Application.Run(new quoteWindow(stock));
         }
+    }
+
+    interface quote
+    {
+        public string symbol { get; set; }
+        private void fetchData(string symbol) { }
     }
 }

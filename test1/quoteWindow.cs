@@ -1,8 +1,8 @@
 ﻿namespace test1
 {
-    class window : Form
+    class quoteWindow : Form
     {
-        string ticker;
+        string symbol;
         string open;
         string high;
         string low;
@@ -10,9 +10,9 @@
         string pclose;
         string changep;
 
-        public window(stockdata stock)
+        public quoteWindow(dailyQuote stock)
         {
-            this.ticker = stock.symbol.ToString();
+            this.symbol = stock.symbol.ToString();
             this.open = stock.open.ToString();
             this.high = stock.high.ToString();
             this.low = stock.low.ToString();
@@ -32,7 +32,7 @@
         private void InitializeComponent()
         {
             this.ClientSize = new System.Drawing.Size(400, 200);
-            this.Text = ticker + " - previous day trading stats";
+            this.Text = symbol + " - previous day trading stats";
 
             this.SuspendLayout();
 

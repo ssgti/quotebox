@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace test1
 {
-    class stockdata
+    class dailyQuote : quote
     {
         public string symbol { get; set; }
         public double open { get; set; }
@@ -18,7 +18,7 @@ namespace test1
         public double pclose { get; set; }
         public string changep { get; set; }
 
-        public stockdata(string symbol)
+        public dailyQuote(string symbol)
         {
             this.symbol = symbol;
             fetchData(symbol);
