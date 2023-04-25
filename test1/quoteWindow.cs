@@ -3,6 +3,7 @@
     class quoteWindow : Form
     {
         string symbol;
+        string name;
         string open;
         string high;
         string low;
@@ -10,9 +11,10 @@
         string pclose;
         string changep;
 
-        public quoteWindow(dailyQuote stock)
+        public quoteWindow(dailyQuote stock, string symbol, string name)
         {
-            this.symbol = stock.symbol.ToString();
+            this.symbol = symbol;
+            this.name = name;
             this.open = stock.open.ToString();
             this.high = stock.high.ToString();
             this.low = stock.low.ToString();
@@ -32,7 +34,7 @@
         private void InitializeComponent()
         {
             this.ClientSize = new System.Drawing.Size(400, 200);
-            this.Text = symbol + " - previous day trading stats";
+            this.Text = symbol + " - " + name;
 
             this.SuspendLayout();
 
