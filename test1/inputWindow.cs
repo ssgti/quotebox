@@ -16,7 +16,7 @@
         private void InitializeComponent()
         {
             this.ClientSize = new System.Drawing.Size(400, 200);
-            this.Text = "stock quote endpoint";
+            this.Text = "stock quote endpoint    (very WIP)";
 
             this.SuspendLayout();
 
@@ -51,11 +51,12 @@
         {
             try
             {
-                dailyQuote stock = new dailyQuote(inputBox.Text.ToString());
-                quoteWindow quote = new quoteWindow(stock);
+                Stock stock = new Stock(inputBox.Text.ToString());
+                dailyQuote stockQuote = new dailyQuote(stock.symbol);
+                quoteWindow quote = new quoteWindow(stockQuote, stock.symbol, stock.name);
                 quote.Show();
-
-            } catch (Exception ex)
+            } 
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "oops!");
             }
