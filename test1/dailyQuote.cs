@@ -25,6 +25,8 @@ namespace test1
             string query_url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=LMLD4P0XA1H59J54";
             Uri queryUri = new Uri(query_url);
 
+            // financial data comes straight from the API so it's nothing to do with me if it's wrong :)
+
             using (WebClient client = new WebClient())
             {
                 dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
@@ -33,6 +35,7 @@ namespace test1
                 {
                     using JsonDocument doc = JsonDocument.Parse(kvp.Value.ToString());
                     JsonElement jsonElement = doc.RootElement;
+                    // both this and nameQuote use different methods for parsing JSON and I don't know which is better
 
                     string o = jsonElement.GetProperty("02. open").ToString();
                     this.open = double.Parse(o);
