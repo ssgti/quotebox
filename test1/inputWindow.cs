@@ -12,6 +12,7 @@
         private System.Windows.Forms.TextBox inputBox;
         private System.Windows.Forms.Button quoteBtn;
         private System.Windows.Forms.Label quoteLabel;
+        private System.Windows.Forms.Label statusLabel;
 
         private void InitializeComponent()
         {
@@ -43,22 +44,39 @@
             this.quoteLabel.Text = "enter stock symbol";
             Controls.Add(quoteLabel);
 
+            statusLabel = new Label();
+            this.statusLabel = new System.Windows.Forms.Label();
+            this.statusLabel.Location = new System.Drawing.Point(7, 90);
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Size = new System.Drawing.Size(100, 30);
+            this.statusLabel.Text = "";
+            Controls.Add(statusLabel);
+
             this.ResumeLayout(false);
             this.PerformLayout();
         }
 
         private void quoteBtn_Click(object sender, System.EventArgs e)
         {
-            try
+
+            if(inputBox.Text != "")
             {
-                Stock stock = new Stock(inputBox.Text.ToString());
-                dailyQuote stockQuote = new dailyQuote(stock.symbol);
-                quoteWindow quote = new quoteWindow(stockQuote, stock.symbol, stock.name);
-                quote.Show();
-            } 
-            catch (Exception ex)
+                try
+                {
+                    Stock stock = new Stock(inputBox.Text.ToString());
+                    dailyQuote stockQuote = new dailyQuote(stock.symbol);
+                    quoteWindow quote = new quoteWindow(stockQuote, stock.symbol, stock.name);
+                    quote.Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "oops!");
+                }
+                statusLabel.Text = "";
+            }
+            else
             {
-                MessageBox.Show(ex.ToString(), "oops!");
+                statusLabel.Text = "search box empty!";
             }
         }
     }

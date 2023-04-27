@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace test1
 {
@@ -14,47 +15,60 @@ namespace test1
         public double pclose { get; set; }
         public string changep { get; set; }
 
+        private bool success;
+
         public dailyQuote(string symbol)
         {
             this.symbol = symbol;
-            fetchData(symbol);
+            do
+            {
+                success = fetchData(symbol);
+            } while (success == false); // do it until it works (this just causes the program to hang)
         }
 
-        private void fetchData(string symbol)
+        private bool fetchData(string symbol)
         {
-            string query_url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=LMLD4P0XA1H59J54";
-            Uri queryUri = new Uri(query_url);
-
-            // financial data comes straight from the API so it's nothing to do with me if it's wrong :)
-
-            using (WebClient client = new WebClient())
+            try
             {
-                dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                string query_url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=LMLD4P0XA1H59J54";
+                Uri queryUri = new Uri(query_url);
 
-                foreach(KeyValuePair<string, dynamic> kvp in json_data)
+                // financial data comes straight from the API so it's nothing to do with me if it's wrong :)
+
+                using (WebClient client = new WebClient())
                 {
-                    using JsonDocument doc = JsonDocument.Parse(kvp.Value.ToString());
-                    JsonElement jsonElement = doc.RootElement;
-                    // both this and nameQuote use different methods for parsing JSON and I don't know which is better
+                    dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
 
-                    string o = jsonElement.GetProperty("02. open").ToString();
-                    this.open = double.Parse(o);
+                    foreach(KeyValuePair<string, dynamic> kvp in json_data)
+                    {
+                        using JsonDocument doc = JsonDocument.Parse(kvp.Value.ToString());
+                        JsonElement jsonElement = doc.RootElement;
+                        // both this and nameQuote use different methods for parsing JSON and I don't know which is better
 
-                    string h = jsonElement.GetProperty("03. high").ToString();
-                    this.high = double.Parse(h);
+                        string o = jsonElement.GetProperty("02. open").ToString();
+                        this.open = double.Parse(o);
 
-                    string l = jsonElement.GetProperty("04. low").ToString();
-                    this.low = double.Parse(l);
+                        string h = jsonElement.GetProperty("03. high").ToString();
+                        this.high = double.Parse(h);
 
-                    string p = jsonElement.GetProperty("05. price").ToString();
-                    this.price = double.Parse(p);
+                        string l = jsonElement.GetProperty("04. low").ToString();
+                        this.low = double.Parse(l);
 
-                    string c = jsonElement.GetProperty("08. previous close").ToString();
-                    this.pclose = double.Parse(c);
+                        string p = jsonElement.GetProperty("05. price").ToString();
+                        this.price = double.Parse(p);
 
-                    string ch = jsonElement.GetProperty("10. change percent").ToString();
-                    this.changep = ch;
+                        string c = jsonElement.GetProperty("08. previous close").ToString();
+                        this.pclose = double.Parse(c);
+
+                        string ch = jsonElement.GetProperty("10. change percent").ToString();
+                        this.changep = ch;
+                    }
                 }
+                return true;
+            }
+            catch (System.Text.Json.JsonException ex)
+            {
+                return false;
             }
         }
     }
