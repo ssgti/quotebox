@@ -65,7 +65,7 @@
                 {
                     Stock stock = new Stock(inputBox.Text.ToString());
                     dailyQuote stockQuote = new dailyQuote(stock.symbol);
-                    quoteWindow quote = new quoteWindow(stockQuote, stock.symbol, stock.name);
+                    quoteWindow quote = new quoteWindow(stockQuote.labels, stock.symbol, stock.name);
                     quote.Show();
                 }
                 catch (Exception ex)

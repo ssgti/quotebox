@@ -4,20 +4,13 @@
     {
         string symbol;
         string name;
+        Dictionary<string, string> labels;
 
-        public quoteWindow(dailyQuote stock, string symbol, string name)
+        public quoteWindow(Dictionary<string, string> labels, string symbol, string name)
         {
             this.symbol = symbol;
             this.name = name;
-
-            var labels = new Dictionary<string, string>(){
-                { "open", stock.open.ToString() },
-                { "high", stock.high.ToString() },
-                { "low", stock.low.ToString() },
-                { "price", stock.price.ToString() },
-                { "previous close", stock.pclose.ToString() },
-                { "percentage change", stock.changep.ToString() }
-            };
+            this.labels = labels;
 
             InitializeComponent(labels);
         }
@@ -31,9 +24,8 @@
 
             this.SuspendLayout();
 
-              // this saves a LOT of lines of code
-             //  no longer need to manually define labels
-            //   should hopefully also make this class reusable
+             // this saves a LOT of lines of code
+            //  no longer need to manually define labels
             int vOffset = 10;
             foreach (KeyValuePair<string,string> type in labels)
             {
