@@ -8,67 +8,48 @@ namespace test1
     class dailyQuote : quote
     {
         public string symbol { get; set; }
-        public double open { get; set; }
-        public double high { get; set; }
-        public double low { get; set; }
-        public double price { get; set; }
-        public double pclose { get; set; }
-        public string changep { get; set; }
-
-        private bool success;
+        public Dictionary<string, string> labels { get; set; }
 
         public dailyQuote(string symbol)
         {
             this.symbol = symbol;
-            do
-            {
-                success = fetchData(symbol);
-            } while (success == false); // do it until it works (this just causes the program to hang)
+            fetchData(symbol);
         }
 
-        private bool fetchData(string symbol)
+        private void fetchData(string symbol)
         {
-            try
+            string query_url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=LMLD4P0XA1H59J54";
+            Uri queryUri = new Uri(query_url);
+
+            // financial data comes straight from the API so it's nothing to do with me if it's wrong :)
+
+            using (WebClient client = new WebClient())
             {
-                string query_url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=LMLD4P0XA1H59J54";
-                Uri queryUri = new Uri(query_url);
+                dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
 
-                // financial data comes straight from the API so it's nothing to do with me if it's wrong :)
-
-                using (WebClient client = new WebClient())
+                foreach(KeyValuePair<string, dynamic> kvp in json_data)
                 {
-                    dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                    using JsonDocument doc = JsonDocument.Parse(kvp.Value.ToString());
+                    JsonElement jsonElement = doc.RootElement;
+                    // both this and nameQuote use different methods for parsing JSON and I don't know which is better
 
-                    foreach(KeyValuePair<string, dynamic> kvp in json_data)
+                    string o = jsonElement.GetProperty("02. open").ToString();
+                    string h = jsonElement.GetProperty("03. high").ToString();
+                    string l = jsonElement.GetProperty("04. low").ToString();
+                    string p = jsonElement.GetProperty("05. price").ToString();
+                    string c = jsonElement.GetProperty("08. previous close").ToString();
+                    string ch = jsonElement.GetProperty("10. change percent").ToString();
+
+                    this.labels = new Dictionary<string, string>()
                     {
-                        using JsonDocument doc = JsonDocument.Parse(kvp.Value.ToString());
-                        JsonElement jsonElement = doc.RootElement;
-                        // both this and nameQuote use different methods for parsing JSON and I don't know which is better
-
-                        string o = jsonElement.GetProperty("02. open").ToString();
-                        this.open = double.Parse(o);
-
-                        string h = jsonElement.GetProperty("03. high").ToString();
-                        this.high = double.Parse(h);
-
-                        string l = jsonElement.GetProperty("04. low").ToString();
-                        this.low = double.Parse(l);
-
-                        string p = jsonElement.GetProperty("05. price").ToString();
-                        this.price = double.Parse(p);
-
-                        string c = jsonElement.GetProperty("08. previous close").ToString();
-                        this.pclose = double.Parse(c);
-
-                        string ch = jsonElement.GetProperty("10. change percent").ToString();
-                        this.changep = ch;
-                    }
+                        { "open", double.Parse(o).ToString() },
+                        { "high", double.Parse(h).ToString() },
+                        { "low", double.Parse(l).ToString() },
+                        { "price", double.Parse(p).ToString() },
+                        { "previous close", double.Parse(c).ToString() },
+                        { "percentage change", ch }
+                    }; // parsing and then converting to string is to remove empty decimal points
                 }
-                return true;
-            }
-            catch (System.Text.Json.JsonException ex)
-            {
-                return false;
             }
         }
     }
