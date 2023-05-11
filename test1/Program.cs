@@ -12,6 +12,8 @@ namespace test1
     interface quote
     {
         public string symbol { get; set; }
+        public Dictionary<string, string> labels { get; set; }
+
         private void fetchData(string symbol) { }
     }
 }
