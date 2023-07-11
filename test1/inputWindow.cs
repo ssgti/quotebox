@@ -52,6 +52,8 @@
             this.statusLabel.Text = "";
             Controls.Add(statusLabel);
 
+            this.StartPosition = FormStartPosition.CenterScreen;
+
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -63,14 +65,20 @@
             {
                 try
                 {
+                    Point dqStartPos = new Point(10, 10);
                     Stock stock = new Stock(inputBox.Text.ToString());
                     dailyQuote stockQuote = new dailyQuote(stock.symbol);
-                    quoteWindow quote = new quoteWindow(stockQuote.labels, stock.symbol, stock.name);
-                    quote.Show();
+                    quoteWindow sQuote = new quoteWindow(stockQuote.labels, stock.symbol, stock.name, dqStartPos);
+                    sQuote.Show();
+
+                    Point iqStartPos = new Point(10, 100);
+                    infoQuote infoQuote = new infoQuote(stock.symbol);
+                    quoteWindow iQuote = new quoteWindow(infoQuote.labels, stock.symbol, stock.name, dqStartPos);
+                    iQuote.Show();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString(), "oops!");
+                    MessageBox.Show(ex.Message, "oops!");
                 }
                 statusLabel.Text = "";
             }

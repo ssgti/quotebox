@@ -10,7 +10,7 @@ namespace test1
         public string symbol { get; set; }
         public Dictionary<string, string> labels { get; set; }
 
-        public dailyQuote(string symbol)
+        public dailyQuote(string symbol) // daily price quote and trading stats
         {
             this.symbol = symbol;
             fetchData(symbol);

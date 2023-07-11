@@ -5,12 +5,14 @@
         string symbol;
         string name;
         Dictionary<string, string> labels;
+        Point startpos;
 
-        public quoteWindow(Dictionary<string, string> labels, string symbol, string name)
+        public quoteWindow(Dictionary<string, string> labels, string symbol, string name, Point startpos)
         {
             this.symbol = symbol;
             this.name = name;
             this.labels = labels;
+            this.startpos = startpos;
 
             InitializeComponent(labels);
         }
@@ -19,7 +21,9 @@
 
         private void InitializeComponent(Dictionary<string, string> labels)
         {
-            
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = this.startpos;
+
             this.Text = symbol + " - " + name;
 
             this.SuspendLayout();

@@ -9,7 +9,6 @@ namespace test1
     {
         public string symbol { get; set; }
         public string name { get; set; }
-
         public Dictionary<string, string> labels { get; set; }
 
         public nameQuote(string symbol)
